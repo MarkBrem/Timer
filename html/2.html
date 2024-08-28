@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #animation {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            position: relative;
+            display: none;
+            margin-top: 20px;
+        }
+        #start-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Таймер</h1>
+    <div id="timer">00:30.000</div>
+    <div id="animation"></div>
+    <button id="start-button" disabled>Почати знову</button>
+
+    <script>
+        let timeInMilliseconds = 30000; // 30 секунд в мілісекундах
+const timerDisplay = document.getElementById('timer');
+const animationDiv = document.getElementById('animation');
+const startButton = document.getElementById('start-button');
+
+const formatTime = (milliseconds) => {
+    const seconds = Math.floor(milliseconds / 1000);
+    const millis = milliseconds % 1000;
+    return `00:${seconds.toString().padStart(2, '0')}.${millis.toString().padStart(3, '0')}`;
+};
+
+const updateTimer = () => {
+    timeInMilliseconds -= 10;
+    timerDisplay.textContent = formatTime(timeInMilliseconds);
+
+    if (timeInMilliseconds <= 10000) { // 10 секунд
+        animationDiv.style.display = 'block';
+        animationDiv.style.backgroundColor = animationDiv.style.backgroundColor === 'blue' ? 'red' : 'blue';
+        animationDiv.style.transform = `translate(${Math.random() * 50}px, ${Math.random() * 50}px)`;
+    }
+
+    if (timeInMilliseconds <= 0) {
+        clearInterval(timerInterval);
+        animationDiv.style.display = 'none';
+        startButton.disabled = false;
+    }
+};
+
+const timerInterval = setInterval(updateTimer, 10);
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Таймер</h1>
+    <div id="timer">00:30.000</div>
+    <div id="animation"></div>
+    <button id="start-button" disabled>Почати знову</button>
+
+    <script>
+        let timeInSeconds = 3600; // 1 година в секундах
+const timerDisplay = document.getElementById('timer');
+const messageDisplay = document.getElementById('message');
+
+const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+};
+
+const updateTimer = () => {
+    timeInSeconds--;
+    timerDisplay.textContent = formatTime(timeInSeconds);
+
+    if (timeInSeconds === 1800) { // 30 хвилин
+        messageDisplay.textContent = 'Залишилось менше половини часу!';
+    }
+
+    if (timeInSeconds <= 0) {
+        clearInterval(timerInterval);
+    }
+};
+
+const timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
